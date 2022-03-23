@@ -7,7 +7,7 @@
 // 2) Anonymous classes - singletons.
 
 /*
-    The first memory resource is anonymous singleton, to which we have access using
+    This memory resource is singleton, to which we have access using
     std::pmr::null_memory_resource().
 */
 namespace example_1
@@ -37,3 +37,40 @@ namespace example_1
     }
 
 }  // namespace example_1
+
+/*
+ This memory resource is singleton, to which we have access using
+ std::pmr::new_delete_resource().
+*/
+namespace example_2
+{
+    class UNKNOWN : public std::pmr::memory_resource
+    {
+        void* do_allocate(size_t bytes, size_t) override
+        {
+            return ::operator new(bytes);
+        }
+
+        void do_deallocate(void* p, size_t, size_t) override
+        {
+            return ::operator delete(p);
+        }
+
+        bool do_is_equal(const std::pmr::memory_resource& rhs) const noexcept override
+        {
+            return this == &rhs;
+        }
+    };
+
+    // This memory resource is singleton, used by default for each container.
+    // It allocates/deallocates memory using new-delete functions.
+    std::pmr::memory_resource* new_delete_resource() noexcept
+    {
+        static UNKNOWN singleton;
+        return &singleton;
+    }
+}  // namespace example_2
+
+namespace example_3
+{
+}
