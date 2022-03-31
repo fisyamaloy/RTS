@@ -4,7 +4,7 @@
 #include "LinuxWidgets/LinuxWidgets.hpp"
 #include "WidgetsFactoryAbstract.hpp"
 
-class LinuxWidgetsFactory : WidgetsFactoryAbstract
+class LinuxWidgetsFactory : public WidgetsFactoryAbstract
 {
 public:
     std::shared_ptr<ButtonAbstract> createButton() const override

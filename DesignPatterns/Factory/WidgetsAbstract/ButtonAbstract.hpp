@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
 
-struct ButtonAbstract
+class ButtonAbstract
 {
+public:
     virtual void paint() const = 0;
 };

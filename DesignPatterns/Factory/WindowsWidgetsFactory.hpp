@@ -4,7 +4,7 @@
 #include "WidgetsFactoryAbstract.hpp"
 #include "WindowsWidgets/WindowsWidgets.hpp"
 
-class WindowsWidgetsFactory : WidgetsFactoryAbstract
+class WindowsWidgetsFactory : public WidgetsFactoryAbstract
 {
 public:
     std::shared_ptr<ButtonAbstract> createButton() const override
