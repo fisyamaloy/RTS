@@ -27,7 +27,7 @@ namespace example_1
         }
     };
 
-    // null_memory_resource seems like useful thing, because it is only for throwing an exception
+    // null_memory_resource seems like useless thing, because it is only for throwing an exception
     // when someone wants to allocate memory using null_memory_resource.
     // However it will be needed when we use more complex memory_resource.
     std::pmr::memory_resource* null_memory_resource() noexcept
@@ -73,4 +73,5 @@ namespace example_2
 
 namespace example_3
 {
+
 }

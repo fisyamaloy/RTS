@@ -37,5 +37,6 @@ conan_cmake_run(CONANFILE conanfile.txt
 
 enable_testing()
 
+add_subdirectory(DesignPatterns)
 add_subdirectory(MemoryManagement)
 add_subdirectory(RTTI)
