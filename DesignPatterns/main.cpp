@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "Factory/LinuxWidgetsFactory.hpp"
 #include "Factory/WindowsWidgetsFactory.hpp"
 
 int main()
