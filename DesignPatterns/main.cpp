@@ -5,8 +5,7 @@
 
 int main()
 {
-    LinuxWidgetsFactory lwf;
-
+    WindowsWidgetsFactory lwf;
     lwf.createButton()->paint();
     lwf.createCheckBox()->paint();
     lwf.createField()->paint();

@@ -1,4 +1,6 @@
 #pragma once
+
+#ifdef __linux__
 #include "../WidgetsAbstract/FieldAbstract.hpp"
 
 class LinuxField : public FieldAbstract
@@ -8,3 +10,5 @@ class LinuxField : public FieldAbstract
         std::cout << "LinuxField painted" << std::endl;
     }
 };
+
+#endif

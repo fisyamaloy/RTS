@@ -1,4 +1,8 @@
 #pragma once
+#ifdef _WIN32
+
+#include <iostream>
+
 #include "../WidgetsAbstract/CheckBoxAbstract.hpp"
 
 class WindowsCheckBox : public CheckBoxAbstract
@@ -8,3 +12,5 @@ class WindowsCheckBox : public CheckBoxAbstract
         std::cout << "WindowsCheckBox painted" << std::endl;
     }
 };
+
+#endif

@@ -1,4 +1,8 @@
 #pragma once
+#ifdef _WIN32
+
+#include <iostream>
+
 #include "../WidgetsAbstract/FieldAbstract.hpp"
 
 class WindowsField : public FieldAbstract
@@ -8,3 +12,4 @@ class WindowsField : public FieldAbstract
         std::cout << "WindowsField painted" << std::endl;
     }
 };
+#endif

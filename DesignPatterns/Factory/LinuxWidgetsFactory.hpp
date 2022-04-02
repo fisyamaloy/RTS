@@ -1,4 +1,6 @@
 #pragma once
+#ifdef __linux__
+
 #include <memory>
 
 #include "LinuxWidgets/LinuxWidgets.hpp"
@@ -22,3 +24,5 @@ public:
         return std::make_shared<LinuxField>();
     }
 };
+
+#endif

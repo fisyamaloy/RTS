@@ -1,4 +1,6 @@
 #pragma once
+#ifdef _WIN32
+
 #include <memory>
 
 #include "WidgetsFactoryAbstract.hpp"
@@ -22,3 +24,5 @@ public:
         return std::make_shared<WindowsField>();
     }
 };
+
+#endif

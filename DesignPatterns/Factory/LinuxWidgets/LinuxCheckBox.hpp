@@ -1,4 +1,6 @@
 #pragma once
+#ifdef __linux__
+
 #include "../WidgetsAbstract/CheckBoxAbstract.hpp"
 
 class LinuxCheckBox : public CheckBoxAbstract
@@ -8,3 +10,5 @@ class LinuxCheckBox : public CheckBoxAbstract
         std::cout << "LinuxCheckBox painted" << std::endl;
     }
 };
+
+#endif

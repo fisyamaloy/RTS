@@ -1,8 +1,10 @@
 #pragma once
 #include <iostream>
 
-class ButtonAbstract
+class CheckBoxAbstract
 {
 public:
+    virtual ~CheckBoxAbstract() = default;
+
     virtual void paint() const = 0;
 };
