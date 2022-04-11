@@ -1,4 +1,4 @@
-set(TARGET WidgetsFactoryAbstract)
+set(TARGET DesignPatterns)
 
 set(SOURCE_FILES
    main.cpp
@@ -7,5 +7,6 @@ set(SOURCE_FILES
    Factory/WindowsWidgetsFactory.hpp)
 
 add_subdirectory(Factory)
+add_subdirectory(Builder)
 
 add_executable(${TARGET} ${SOURCE_FILES})
