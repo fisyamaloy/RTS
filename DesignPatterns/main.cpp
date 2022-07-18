@@ -3,24 +3,35 @@
 #include "Builder/BlogPostBuilder.hpp"
 #include "Factory/LinuxWidgetsFactory.hpp"
 #include "Factory/WindowsWidgetsFactory.hpp"
+#include "Adapter/Adapter.hpp"
 
 int main()
 {
+    std::unique_ptr<WidgetsFactoryAbstract> widgetsFactory;
 #ifdef _WIN32
-    auto wwf = std::make_unique<WindowsWidgetsFactory>();
-    wwf->createButton()->paint();
-    wwf->createCheckBox()->paint();
-    wwf->createField()->paint();
+    widgetsFactory = std::make_unique<WindowsWidgetsFactory>();
 #elif __linux__
-    auto lwf = std::make_unique<LinuxWidgetsFactory>();
-    lwf->createButton()->paint();
-    lwf->createCheckBox()->paint();
-    lwf->createField()->paint();
+    widgetsFactory = std::make_unique<LinuxWidgetsFactory>();
 #endif
+    widgetsFactory->createButton()->paint();
+    widgetsFactory->createCheckBox()->paint();
+    widgetsFactory->createField()->paint();
 
+    
     auto pbp      = std::make_unique<BlogPostBuilder>();
     auto blogPost = pbp->setTitle("title")->setBody("body")->getBlogPost();
     std::cout << blogPost->body << " " << blogPost->title << std::endl;
+
+
+    std::unique_ptr<BritishScales> bs = std::make_unique<BritishScales>(50);
+    IScales* rScales = new RussianScales(55);
+    IScales* bScales = new AdapterForBritishScales(std::move(bs));
+    std::cout << rScales->getWeight() << std::endl;
+    std::cout << bScales->getWeight() << std::endl;
+
+
+    
+    
 
     return 0;
 }

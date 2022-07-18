@@ -6,9 +6,9 @@ set(SOURCE_FILES
         LinuxField.hpp
         LinuxWidgets.hpp)
 
-add_library(${TARGET} STATIC ${SOURCE_FILES})
+add_library(${TARGET} ${SOURCE_FILES} ${CMAKE_SOURCE_DIR}/DesignPatterns/Factory/WidgetsAbstract/ButtonAbstract.hpp)
 
 set_target_properties(${TARGET} PROPERTIES
     LINKER_LANGUAGE CXX)
 
-target_link_libraries(${TARGET} PUBLIC WidgetsAbstract)
+target_include_directories(${TARGET} PUBLIC ${CMAKE_SOURCE_DIR}/DesignPatterns/Factory/WidgetsAbstract/)

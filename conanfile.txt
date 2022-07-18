@@ -1,5 +1,6 @@
 [requires]
 gtest/1.11.0
+pthreads4w/3.0.0
 
 [generators]
 cmake

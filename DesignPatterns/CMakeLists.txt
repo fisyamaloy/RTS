@@ -8,5 +8,6 @@ set(SOURCE_FILES
 
 add_subdirectory(Factory)
 add_subdirectory(Builder)
+add_subdirectory(Adapter)
 
 add_executable(${TARGET} ${SOURCE_FILES})

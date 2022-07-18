@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "MemoryResources.hpp"
 
@@ -17,11 +18,11 @@ int main()
         bigBuffer, sizeof(bigBuffer), example_1::null_memory_resource());
 
     int* b = static_cast<int*>(mbr.allocate(sizeof(int)));
-    *b = 300;
+    *b     = 300;
 
     // exception is here
-    int* c = static_cast<int*>(mbr.allocate(sizeof(int)));
-    *c     = 150;
+    //int* c = static_cast<int*>(mbr.allocate(sizeof(int)));
+    //*c     = 150;
 
     return 0;
 }
