@@ -1,7 +1,8 @@
 set(TARGET PThreadExamples)
 
 set(SOURCE_FILES
-   main.cpp)
+   main.cpp
+   PThreadExamples.hpp)
 
 add_executable(${TARGET} ${SOURCE_FILES})
 
