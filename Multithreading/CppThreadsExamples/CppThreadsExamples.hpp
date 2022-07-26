@@ -1,8 +1,10 @@
+#pragma once
 #include <chrono>
+#include <condition_variable>
+#include <csignal>
 #include <iostream>
 #include <mutex>
 #include <thread>
-#include <condition_variable>
 
 namespace CppThreadsExamples
 {
@@ -245,7 +247,9 @@ namespace CppThreadsExamples
             while (true)
             {
                 std::unique_lock<std::mutex> ul(m);
-                cv.wait(ul, []() { return showNumbers; }); // The same as: while (!showNumbers) cv.wait(ul);
+                cv.wait(ul, []() {
+                    return showNumbers;
+                });  // The same as: while (!showNumbers) cv.wait(ul);
 
                 std::cout << ++counter << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(200));
@@ -280,3 +284,32 @@ namespace CppThreadsExamples
     }  // namespace ConditionalVariable
 
 }  // namespace CppThreadsExamples
+
+namespace IPCSignalExamples
+{
+    void sigintHandler(int signum)
+    {
+        std::cout << "Interrupt signal (" << signum << ") received.\n";
+
+        // cleanup and close up stuff here
+        // terminate program
+
+        exit(signum);
+    }
+
+    void run()
+    {
+        signal(SIGINT, sigintHandler);
+
+        int i = 0;
+        while (1)
+        {
+            if (++i == 3) 
+                raise(SIGINT);
+
+            std::cout << "Going to sleep...." << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        }
+    }
+
+}  // namespace IPCSignalExamples

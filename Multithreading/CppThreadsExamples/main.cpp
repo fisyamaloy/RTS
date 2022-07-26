@@ -11,6 +11,8 @@ int main()
     CppThreadsExamples::Deadlock::run();
     CppThreadsExamples::RecursiveMutex::run();
     CppThreadsExamples::ConditionalVariable::run();
-	
+
+    IPCSignalExamples::run();
+
     return 0;
 }
