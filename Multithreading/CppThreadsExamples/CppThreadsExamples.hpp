@@ -143,13 +143,18 @@ namespace CppThreadsExamples
     {
         std::mutex m;
 
+        void unsafe_output(const char symb) 
+        {
+            std::cout << symb << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        }
+
         void foo(const char symb)
         {
-            for (int i = 0; i < 10; ++i)
+            while (true)
             {
                 std::lock_guard<std::mutex> lg(m);
-                std::cout << symb << std::endl;
-                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                unsafe_output(symb);
             }
         }
 
@@ -160,6 +165,7 @@ namespace CppThreadsExamples
             t_1.join();
             t_2.join();
         }
+
     }  // namespace SimpleMutex
 
     namespace Deadlock
@@ -304,8 +310,7 @@ namespace IPCSignalExamples
         int i = 0;
         while (1)
         {
-            if (++i == 3) 
-                raise(SIGINT);
+            if (++i == 3) raise(SIGINT);
 
             std::cout << "Going to sleep...." << std::endl;
             std::this_thread::sleep_for(std::chrono::milliseconds(500));

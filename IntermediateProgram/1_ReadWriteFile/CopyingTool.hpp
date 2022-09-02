@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <atomic>
 #include "FileReader.hpp"
 #include "FileWriter.hpp"
 #include "SafeQueue.hpp"
