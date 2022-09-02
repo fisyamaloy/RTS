@@ -3,13 +3,13 @@
 #include <memory>
 #include <vector>
 
-#include "PThreadExamples.hpp"
+//#include "PThreadExamples.hpp"
 
 int main()
 {
-    pthread_examples::SimpleExample::run();
+    /*pthread_examples::SimpleExample::run();
     pthread_examples::MutexExample::run();
-    pthread_examples::LoopThreadsExample::run();
+    pthread_examples::LoopThreadsExample::run();*/
 
     return 0;
 }
