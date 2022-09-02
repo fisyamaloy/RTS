@@ -25,8 +25,9 @@ private:
 	void copying();
 
 private:
-	std::string _sourceFileName;
-	std::string _targetFileName;
+    FileReader _fileReader;
+    FileWriter _fileWriter;
+
 	SafeQueue<std::vector<char>> _incomingData;
 	std::atomic<bool> _isFileRead = false;
 };
