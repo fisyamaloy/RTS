@@ -46,5 +46,6 @@ enable_testing()
 
 add_subdirectory(DesignPatterns)
 add_subdirectory(MemoryManagement)
+add_subdirectory(IntermediateProgram)
 add_subdirectory(Multithreading)
 add_subdirectory(RTTI)
