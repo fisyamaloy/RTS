@@ -8,4 +8,6 @@ set(SOURCE_FILES
    FileWriter.hpp
    SafeQueue.hpp)
 
+add_compile_options(-pthread)
+
 add_executable(${TARGET} ${SOURCE_FILES})
