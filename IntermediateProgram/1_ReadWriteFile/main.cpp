@@ -13,7 +13,7 @@ int main()
                        "C:\\Users\\Danil_Fisiuk\\Desktop\\target.txt");
         ct.run();
     }
-    catch (const std::exception& e)
+    catch (const std::system_error& e)
     {
         std::cerr << e.what() << '\n';
     }

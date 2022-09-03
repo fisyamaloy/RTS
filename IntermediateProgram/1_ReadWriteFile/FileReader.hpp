@@ -23,7 +23,7 @@ public:
 	{
 		_sourceFile.open(path, std::ios_base::binary);
 		if (!_sourceFile)
-			throw std::exception("Source file dosn't exist");
+			throw std::runtime_error("Source file dosn't exist");
 	}
 
 	void close() { _sourceFile.close(); }

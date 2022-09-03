@@ -33,6 +33,9 @@ void CopyingTool::copying()
     {
         _incomingData.wait(_isFileRead);
 
-        while (!_incomingData.empty()) { _fileWriter.writeBytesChunk(_incomingData.pop()); }
+        while (!_incomingData.empty()) 
+        { 
+            _fileWriter.writeBytesChunk(_incomingData.pop()); 
+        }
     }
 }
