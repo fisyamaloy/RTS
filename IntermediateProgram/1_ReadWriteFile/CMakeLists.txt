@@ -11,3 +11,5 @@ set(SOURCE_FILES
 add_compile_options(-pthread)
 
 add_executable(${TARGET} ${SOURCE_FILES})
+
+target_link_libraries(${TARGET} INTERFACE Utility.Public CONAN_PKG::boost)
