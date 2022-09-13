@@ -1,6 +1,0 @@
-[requires]
-gtest/1.11.0
-boost/1.79.0
-
-[generators]
-cmake

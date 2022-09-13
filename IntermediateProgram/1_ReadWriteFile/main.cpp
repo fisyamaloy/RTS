@@ -1,11 +1,9 @@
 #include <iostream>
-#include "CopyingTool.hpp"
 #include <string>
-#include <filesystem>
+#include "CopyingTool.hpp"
+#include <gtest/gtest.h>
 
-namespace fs = std::filesystem;
-
-int main()
+TEST(CopyingTool, run)
 {
     try
     {
@@ -17,6 +15,10 @@ int main()
     {
         std::cerr << e.what() << '\n';
     }
+}
 
-    return 0;
+int main(int argc, char* argv[])
+{
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

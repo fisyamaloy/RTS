@@ -30,17 +30,9 @@ endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
-function(conan_cmake_run_for_special_conanfile conanfile_name)
-    conan_cmake_run(CONANFILE conanfiles/${conanfile_name}
+conan_cmake_run(CONANFILE conanfile.txt
                     BASIC_SETUP CMAKE_TARGETS
                     BUILD missing)
-endfunction()
-
-IF (WIN32)
-    conan_cmake_run_for_special_conanfile(windows_conanfile.txt)
-ELSEIF (UNIX)
-    conan_cmake_run_for_special_conanfile(unix_conanfile.txt)
-ENDIF()
 
 enable_testing()
 
