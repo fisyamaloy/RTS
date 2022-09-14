@@ -37,7 +37,7 @@ public:
 
 	void writeBytesChunk(std::vector<char> incomingData)
 	{
-		std::copy(incomingData.begin(), incomingData.end(), std::ostream_iterator<char>(_targetFile));
+		_targetFile << incomingData.data();
 	}
 
 private:

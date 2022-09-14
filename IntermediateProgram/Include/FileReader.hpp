@@ -34,10 +34,10 @@ public:
 
 	std::vector<char> readNextBytesChunk()
 	{
-		constexpr size_t BUFFER_SIZE = 4096;
+		constexpr size_t BUFFER_SIZE = 20480;
 
 		std::vector<char> buffer(BUFFER_SIZE, '\0');
-		_sourceFile.read(reinterpret_cast<char*>(&buffer[0]), BUFFER_SIZE);
+		_sourceFile.read(buffer.data(), BUFFER_SIZE);
 
 		const size_t actualRead = _sourceFile.gcount();
 		buffer.resize(actualRead);
