@@ -1,6 +1,5 @@
 #include "CopyingTool.hpp"
 
-#include <fstream>
 #include <thread>
 
 CopyingTool::CopyingTool(const std::string& sourceFileName, const std::string& targetFileName)
@@ -37,5 +36,10 @@ void CopyingTool::copying()
         { 
             _fileWriter.writeBytesChunk(_incomingData.pop()); 
         }
+    }
+
+    while (!_incomingData.empty())
+    {
+        _fileWriter.writeBytesChunk(_incomingData.pop());
     }
 }
