@@ -13,37 +13,14 @@ public:
 	FileReader& operator=(const FileReader&) = delete;
 	FileReader& operator=(FileReader&&) = delete;
 
-	~FileReader()
-	{
-		if (_sourceFile)
-			_sourceFile.close();
-	}
+	~FileReader() noexcept;
 
-	void open(const std::string& path)
-	{
-		_sourceFile.open(path, std::ios_base::binary);
-		if (!_sourceFile)
-			throw std::runtime_error("Source file dosn't exist");
-	}
+	void open(const std::string& path);
+	std::vector<char> readNextBytesChunk();
 
 	void close() { _sourceFile.close(); }
-
 	bool isOpened() const { return _sourceFile.is_open(); }
-
 	bool isEndOfFile() const { return _sourceFile.eof(); }
-
-	std::vector<char> readNextBytesChunk()
-	{
-		constexpr size_t BUFFER_SIZE = 20480;
-
-		std::vector<char> buffer(BUFFER_SIZE, '\0');
-		_sourceFile.read(buffer.data(), BUFFER_SIZE);
-
-		const size_t actualRead = _sourceFile.gcount();
-		buffer.resize(actualRead);
-
-		return buffer;
-	}
 
 private:
 	std::ifstream _sourceFile;

@@ -3,7 +3,9 @@ set(TARGET IntermediateProgram)
 set(SOURCE_FILES
     Include/CopyingTool.cpp
     Include/CopyingTool.hpp
+    Include/FileReader.cpp
     Include/FileReader.hpp
+    Include/FileWriter.cpp
     Include/FileWriter.hpp
     Include/SafeQueue.hpp)
 
