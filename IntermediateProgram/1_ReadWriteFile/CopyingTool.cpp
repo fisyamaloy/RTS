@@ -23,7 +23,7 @@ namespace FileCopyingTool
     {
         while (!_fileReader.isEndOfFile())
         {
-            _incomingData.push(std::move(_fileReader.readNextBytesChunkVec()));
+            _incomingData.push(std::move(_fileReader.readNextBytesChunkVec(20480)));
         }
         _isFileRead = true;
     }
