@@ -1,7 +1,9 @@
 set(TARGET 1_ReadWriteFile)
 
 set(SOURCE_FILES
-   main.cpp)
+   main.cpp
+   CopyingTool.hpp
+   CopyingTool.cpp)
 
 find_package(Threads)
 add_executable(${TARGET} ${SOURCE_FILES})

@@ -14,6 +14,7 @@ public:
 	~FileWriter() noexcept;
 
 	void writeBytesChunk(std::vector<char> incomingData) { _targetFile << incomingData.data(); }
+	void writeBytesChunk(const char* incomingData) { _targetFile << incomingData; }
 	void open(const std::string& path);
 	
 	void close() { _targetFile.close(); }

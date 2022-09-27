@@ -1,10 +1,5 @@
 #include <FileReader.hpp>
 
-namespace
-{
-    constexpr size_t BUFFER_SIZE = 20480;
-}
-
 FileReader::~FileReader() noexcept
 {
     if (_sourceFile) 
@@ -18,13 +13,20 @@ void FileReader::open(const std::string& path)
         throw std::runtime_error("Source file dosn't exist");
 }
 
-std::vector<char> FileReader::readNextBytesChunk()
+std::vector<char> FileReader::readNextBytesChunkVec(const size_t bufferSize)
 {
-    std::vector<char> buffer(BUFFER_SIZE, '\0');
-    _sourceFile.read(buffer.data(), BUFFER_SIZE);
-
+    std::vector<char> buffer(bufferSize, '\0');
+    _sourceFile.read(buffer.data(), bufferSize);
     const size_t actualRead = _sourceFile.gcount();
     buffer.resize(actualRead);
-
     return buffer;
+}
+
+char* FileReader::readNextBytesChunk(const size_t bufferSize)
+{
+    const auto bufferVec = readNextBytesChunkVec(bufferSize);
+    auto pBuffer = new char[bufferVec.size() + 1];
+    std::copy(bufferVec.begin(), bufferVec.end(), pBuffer);
+    pBuffer[bufferVec.size()] = '\0';
+    return pBuffer;
 }

@@ -1,14 +1,15 @@
+#include <gtest/gtest.h>
+
 #include <iostream>
 #include <string>
+
 #include "CopyingTool.hpp"
-#include <gtest/gtest.h>
 
 TEST(CopyingTool, run)
 {
     try
     {
-        CopyingTool ct("C:\\Users\\Danil_Fisiuk\\Desktop\\source.txt",
-                       "C:\\Users\\Danil_Fisiuk\\Desktop\\target.txt");
+        FileCopyingTool::CopyingTool ct("source.txt", "target.txt");
         ct.run();
     }
     catch (const std::system_error& e)
