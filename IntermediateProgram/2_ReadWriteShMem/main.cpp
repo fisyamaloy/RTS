@@ -10,8 +10,10 @@ int main()
         ShMemCopyingTool::CopyingTool ct("source.txt",
             "target.txt", "SharedMemory");
 
-        ct.readFromFileAndWriteToShMem();
-        ct.readFromShMemAndWriteToFile();
+        if (ct.isShMemNameFree())
+            ct.readFromFileAndWriteToShMem();
+        else
+            ct.readFromShMemAndWriteToFile();
     }
     catch (const std::system_error& e)
     {

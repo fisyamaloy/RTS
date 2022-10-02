@@ -12,6 +12,11 @@ static constexpr size_t BUFFER_SIZE = 1024;
 
 namespace ShMemCopyingTool
 {
+    using boost::interprocess::create_only;
+    using boost::interprocess::open_only;
+    using boost::interprocess::read_only;
+    using boost::interprocess::read_write;
+
     CopyingTool::CopyingTool(
         std::string sourceFileName, std::string targetFileName, std::string shMemName)
         : _sourceFileName(std::move(sourceFileName)),
@@ -20,12 +25,25 @@ namespace ShMemCopyingTool
     {
     }
 
+    bool CopyingTool::isShMemNameFree() const
+    {
+        try
+        {
+            boost::interprocess::shared_memory_object b{
+                create_only, _shMemName.c_str(), read_write};
+            boost::interprocess::shared_memory_object::remove(_shMemName.c_str());
+            return true;
+        }
+        catch (boost::interprocess::interprocess_exception&)
+        {
+        }
+
+        return false;
+    }
+
     void CopyingTool::readFromFileAndWriteToShMem()
     {
-        boost::interprocess::shared_memory_object::remove(_shMemName.c_str());
-
-        using boost::interprocess::create_only;
-        using boost::interprocess::read_write;
+        boost::interprocess::message_queue::remove(_shMemName.c_str());
 
         constexpr boost::ulong_long_type   MAX_MESSAGES = 100;
         boost::interprocess::message_queue mq(
@@ -36,7 +54,7 @@ namespace ShMemCopyingTool
 
         while (!_fileReader.isEndOfFile())
         {
-            const auto bytesChunk = _fileReader.readNextBytesChunk(BUFFER_SIZE);
+            const auto       bytesChunk = _fileReader.readNextBytesChunk(BUFFER_SIZE);
             SharedMemoryData shMemBuf{bytesChunk, _fileReader.isEndOfFile()};
             mq.send(&shMemBuf, sizeof(shMemBuf), 0);
         }
@@ -44,16 +62,12 @@ namespace ShMemCopyingTool
 
     void CopyingTool::readFromShMemAndWriteToFile()
     {
-        FileWriter _fileWriter;
-        _fileWriter.open(_targetFileName);
-
-        using boost::interprocess::open_only;
-        using boost::interprocess::read_only;
-
         boost::interprocess::message_queue mq(open_only, _shMemName.c_str());
         boost::ulong_long_type             recievedSize;
         unsigned int                       priority;
 
+        FileWriter _fileWriter;
+        _fileWriter.open(_targetFileName);
         SharedMemoryData shMemBuffer;
         while (!shMemBuffer.isFinished())
         {
@@ -62,7 +76,7 @@ namespace ShMemCopyingTool
             delete[] shMemBuffer.buffer;
             delete shMemBuffer.finish;
         }
-        boost::interprocess::shared_memory_object::remove(_shMemName.c_str());
+        boost::interprocess::message_queue::remove(_shMemName.c_str());
     }
 
 }  // namespace ShMemCopyingTool

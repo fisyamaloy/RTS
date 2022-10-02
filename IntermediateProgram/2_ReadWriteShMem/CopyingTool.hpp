@@ -11,18 +11,17 @@ namespace ShMemCopyingTool
 {
     struct SharedMemoryData
     {
-        char*              buffer;
-        std::atomic<bool>* finish;
+        char* buffer;
+        bool* finish;
         SharedMemoryData() : buffer(nullptr), finish(nullptr) {}
-        SharedMemoryData(char* buffer, bool isFinish)
-            : buffer(buffer), finish(new std::atomic<bool>(isFinish))
+        SharedMemoryData(char* buffer, bool isFinish) : buffer(buffer), finish(new bool(isFinish))
         {
         }
 
         inline bool isFinished() const
         {
-            if (finish)
-                return finish->load();
+            if (finish) 
+                return *finish;
 
             return false;
         }
@@ -40,6 +39,7 @@ namespace ShMemCopyingTool
 
         ~CopyingTool() = default;
 
+        bool isShMemNameFree() const;
         void readFromFileAndWriteToShMem();
         void readFromShMemAndWriteToFile();
 
