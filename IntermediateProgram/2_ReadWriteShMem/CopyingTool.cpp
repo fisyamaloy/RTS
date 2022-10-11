@@ -12,7 +12,7 @@
 #include <string>
 #include <thread>
 
-static constexpr size_t BUFFER_SIZE = 1024;
+static constexpr size_t BUFFER_SIZE = 20480;
 
 struct SharedMemoryData
 {
@@ -21,10 +21,7 @@ struct SharedMemoryData
     SharedMemoryData() : finish(false) {}
     SharedMemoryData(char* buffer, bool isFinish) : buffer(buffer), finish(isFinish) {}
 
-    inline bool isFinished() const
-    {
-        return finish;
-    }
+    inline bool isFinished() const { return finish; }
 
     friend class boost::serialization::access;
 
@@ -55,16 +52,15 @@ namespace ShMemCopyingTool
 
     bool CopyingTool::isShMemNameFree() const
     {
+        std::string str(_shMemName + "dsff");
         try
         {
-            boost::interprocess::shared_memory_object b{
-                create_only, std::string(_shMemName + "dsff").c_str(), read_write};
+            boost::interprocess::shared_memory_object b{create_only, str.c_str(), read_write};
             return true;
         }
         catch (boost::interprocess::interprocess_exception&)
         {
-            boost::interprocess::shared_memory_object::remove(
-                std::string(_shMemName + "dsff").c_str());
+            boost::interprocess::shared_memory_object::remove(str.c_str());
         }
 
         return false;
@@ -74,7 +70,7 @@ namespace ShMemCopyingTool
     {
         boost::interprocess::message_queue::remove(_shMemName.c_str());
 
-        constexpr boost::ulong_long_type   MAX_MESSAGES = 100;
+        constexpr boost::ulong_long_type   MAX_MESSAGES = 100000;
         boost::interprocess::message_queue mq(
             create_only, _shMemName.c_str(), MAX_MESSAGES, BUFFER_SIZE + sizeof(SharedMemoryData));
 
@@ -83,10 +79,10 @@ namespace ShMemCopyingTool
 
         while (!_fileReader.isEndOfFile())
         {
-            const auto        bytesChunk = _fileReader.readNextBytesChunk(BUFFER_SIZE);
-            SharedMemoryData  shMemBuf{bytesChunk, _fileReader.isEndOfFile()};
-            
-            std::stringstream oss;
+            const auto       bytesChunk = _fileReader.readNextBytesChunk(BUFFER_SIZE);
+            SharedMemoryData shMemBuf{bytesChunk, _fileReader.isEndOfFile()};
+
+            std::stringstream             oss;
             boost::archive::text_oarchive oa(oss);
             oa << shMemBuf;
             std::string serialized_string(oss.str());
@@ -98,8 +94,8 @@ namespace ShMemCopyingTool
     void CopyingTool::readFromShMemAndWriteToFile()
     {
         boost::interprocess::message_queue mq(open_only, _shMemName.c_str());
-        boost::ulong_long_type             recievedSize;
-        unsigned int                       priority;
+        boost::ulong_long_type             recievedSize = 0;
+        unsigned int                       priority = 0;
 
         FileWriter _fileWriter;
         _fileWriter.open(_targetFileName);
