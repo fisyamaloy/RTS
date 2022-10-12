@@ -12,7 +12,7 @@
 #include <string>
 #include <thread>
 
-static constexpr size_t BUFFER_SIZE = 20480;
+static constexpr size_t BUFFER_SIZE = 4096;
 
 struct SharedMemoryData
 {
