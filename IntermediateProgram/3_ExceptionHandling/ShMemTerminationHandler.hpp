@@ -38,7 +38,7 @@ public:
         return this;
     }
 
-    void sendStateToSecondProcess(State st) 
+    void sendStateToAnotherProcess(State st) 
     {
         smo.truncate(sizeof(st));
         boost::interprocess::mapped_region regionWriter(smo, read_write);

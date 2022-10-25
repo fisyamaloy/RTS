@@ -10,7 +10,7 @@ static ExceptionHandlingTool::CopyingTool ct("source.txt", "target.txt", "shmem"
 void termHandler() 
 {
     ShMemTerminationHandler th;
-    th.sendStateToSecondProcess(ShMemTerminationHandler::ERROR);
+    th.sendStateToAnotherProcess(ShMemTerminationHandler::ERROR);
     
     int SECONDS_TO_WAIT = 15; // need if exceptions are thrown by both processes 
     while (th.getStateFromAnotherProcess() != ShMemTerminationHandler::SUCCESS)
@@ -35,5 +35,5 @@ int main()
         ct.readFromShMemAndWriteToFile();
 
     ShMemTerminationHandler th;
-    th.sendStateToSecondProcess(ShMemTerminationHandler::SUCCESS);
+    th.sendStateToAnotherProcess(ShMemTerminationHandler::SUCCESS);
 }
