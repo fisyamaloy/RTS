@@ -4,7 +4,10 @@ set(SOURCE_FILES
    main.cpp
    CopyingTool.hpp
    CopyingTool.cpp
-   ShMemTerminationHandler.hpp)
+   ShMemReader.hpp
+   ShMemWriter.hpp
+   TerminationManipulator.hpp
+   SharedMemoryData.hpp)
 
 find_package(Threads)
 add_executable(${TARGET} ${SOURCE_FILES})

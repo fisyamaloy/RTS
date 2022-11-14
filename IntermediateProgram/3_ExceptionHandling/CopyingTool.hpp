@@ -3,8 +3,6 @@
 #include <atomic>
 #include <string>
 
-#include "FileReader.hpp"
-#include "FileWriter.hpp"
 #include "SafeQueue.hpp"
 
 namespace ExceptionHandlingTool
@@ -22,11 +20,9 @@ namespace ExceptionHandlingTool
         ~CopyingTool() = default;
 
         bool isShMemNameFree() const noexcept;
-        bool isWriterToShMem() const noexcept;
-        bool isReaderFromShMem() const noexcept;
         void cleanActiveShMems();
-        void readFromFileAndWriteToShMem();
-        void readFromShMemAndWriteToFile();
+        void copyFileDataToShMem();
+        void copyShMemDataToFile();
         
     private:
         std::string strToCheckSmMemOnFree() const;
@@ -35,8 +31,6 @@ namespace ExceptionHandlingTool
         std::string _sourceFileName;
         std::string _targetFileName;
         std::string _shMemName;
-
-        bool _isWriterToShmem;
     };
 
 }  // namespace ShMemCopyingTool

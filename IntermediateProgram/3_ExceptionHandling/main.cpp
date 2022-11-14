@@ -1,19 +1,25 @@
 #include <iostream>
 #include <string>
+#include <exception>
+#include <cstdlib>
 
+#include "FileReader.hpp"
+#include "FileWriter.hpp"
 #include "CopyingTool.hpp"
-#include "ShMemTerminationHandler.hpp"
+#include "TerminationManipulator.hpp"
 #include <chrono>
+#include "ShMemReader.hpp"
 
-static ExceptionHandlingTool::CopyingTool ct("source.txt", "target.txt", "shmem");
+static ExceptionHandlingTool::CopyingTool ct("source.txt", "target.txt", "shddmem");
+
+static TerminationManipulator tm;
 
 void termHandler() 
 {
-    ShMemTerminationHandler th;
-    th.sendStateToAnotherProcess(ShMemTerminationHandler::ERROR);
+    tm.setTerminationState(TerminationManipulator::ERROR);
     
     int SECONDS_TO_WAIT = 15; // need if exceptions are thrown by both processes 
-    while (th.getStateFromAnotherProcess() != ShMemTerminationHandler::SUCCESS)
+    while (tm.getTerminationState() != TerminationManipulator::SUCCESS)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
         if (SECONDS_TO_WAIT == 0)
@@ -23,17 +29,20 @@ void termHandler()
 
     ct.cleanActiveShMems();
     std::cout << "Own terminate function called" << std::endl;
+    std::abort();
 }
 
 int main()
 {
-    set_terminate(termHandler);
-    
-    if (ct.isWriterToShMem())
-        ct.readFromFileAndWriteToShMem();
-    else
-        ct.readFromShMemAndWriteToFile();
+    std::set_terminate(termHandler);
+    bool isWriterToShMem = ct.isShMemNameFree();
 
-    ShMemTerminationHandler th;
-    th.sendStateToAnotherProcess(ShMemTerminationHandler::SUCCESS);
+    if (isWriterToShMem)
+        ct.copyFileDataToShMem();
+    else
+        ct.copyShMemDataToFile();
+
+    tm.setTerminationState(TerminationManipulator::SUCCESS);
+
+    return 0;
 }

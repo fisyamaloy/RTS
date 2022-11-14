@@ -14,7 +14,7 @@ class SafeQueue
 public:
 	SafeQueue() = default;
 	SafeQueue(const SafeQueue<T>&) = delete;
-	SafeQueue(FileWriter&&) = delete;
+	SafeQueue(SafeQueue<T>&&) = delete;
 	SafeQueue& operator=(const SafeQueue&) = delete;
 	SafeQueue& operator=(SafeQueue&&) = delete;
 
