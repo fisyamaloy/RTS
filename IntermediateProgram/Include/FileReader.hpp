@@ -1,13 +1,18 @@
 #pragma once
 #include <exception>
 #include <fstream>
+#include <string>
 #include <vector>
+#include <memory>
+#include <filesystem>
 
 class FileReader final
 {
 public:
     FileReader() = default;
-    FileReader(const std::string& path) { open(path); }
+    FileReader(const std::string& path) : 
+        _filePath{std::make_unique<std::filesystem::path>(path)}
+    { open(path); }
     FileReader(const FileReader&)            = delete;
     FileReader(FileReader&&)                 = delete;
     FileReader& operator=(const FileReader&) = delete;
@@ -22,7 +27,10 @@ public:
     void close() { _sourceFile.close(); }
     bool isOpened() const{ return _sourceFile.is_open(); }
     bool isEndOfFile() const { return _sourceFile.eof(); }
+    std::size_t getFileSize() const;
+    std::string getFileName() const;
 
 private:
     std::ifstream _sourceFile;
+    std::unique_ptr<std::filesystem::path> _filePath;
 };

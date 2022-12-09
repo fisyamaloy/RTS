@@ -1,4 +1,5 @@
 #include <FileReader.hpp>
+#include <filesystem>
 
 FileReader::~FileReader() noexcept
 {
@@ -29,4 +30,14 @@ char* FileReader::readNextBytesChunk(const size_t bufferSize)
     std::copy(bufferVec.begin(), bufferVec.end(), pBuffer);
     pBuffer[bufferVec.size()] = '\0';
     return pBuffer;
+}
+
+std::size_t FileReader::getFileSize() const 
+{
+    return std::filesystem::file_size(*_filePath);
+}
+
+std::string FileReader::getFileName() const
+{
+    return _filePath->filename().string();
 }

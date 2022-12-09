@@ -1,6 +1,8 @@
 [requires]
 gtest/1.11.0
 boost/1.80.0
+yas/7.1.0
+cryptopp/8.7.0
 
 [generators]
 cmake
