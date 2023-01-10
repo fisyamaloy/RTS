@@ -34,10 +34,9 @@ conan_cmake_run(CONANFILE conanfile.txt
                     BASIC_SETUP CMAKE_TARGETS
                     BUILD missing)
 
-enable_testing()
-
 add_subdirectory(DesignPatterns)
 add_subdirectory(MemoryManagement)
 add_subdirectory(IntermediateProgram)
 add_subdirectory(Multithreading)
+add_subdirectory(Opengl)
 add_subdirectory(RTTI)

@@ -3,6 +3,16 @@ gtest/1.11.0
 boost/1.80.0
 yas/7.1.0
 cryptopp/8.7.0
+glfw/3.3.8
+glad/0.1.36
+glm/cci.20220420
+
+[options]
+glad:gl_profile=core
+glad:gl_version=4.6
+glad:spec=gl
+glad:no_loader=False
 
 [generators]
 cmake
+cmake_find_package
